@@ -1,20 +1,26 @@
 pipeline{
     agent any
     stages{
-        stage('SonarScanner analysis'){
-           
+        stage('SonarQube Analysis'){
             steps{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
                             sh 'chmod +x gradlew'
                             sh './gradlew sonarqube'
-                    }
-                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
-
+                          }
                    }  
-               }
-            
+              }
         }
+        
+        stage('SonarQube Quality Analysis'){
+            steps{
+                script{
+                   waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                   }  
+              }
+        }
+        
+        
        
-}
+   }
 }
