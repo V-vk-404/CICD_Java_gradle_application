@@ -22,7 +22,7 @@ pipeline{
                    }  
               }
         }
-        stage("docker build & docker push"){
+        stage("Docker Build & Docker Push"){
             steps{
                 script{
                     withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_password')]) {
