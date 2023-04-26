@@ -22,29 +22,7 @@ pipeline{
                    }  
               }
         }
-        stage("Docker Build & Docker Push"){
-            steps{
-                script{
-                    withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_password')]) {
-                             sh '''
-                                docker build -t 18.116.29.222:8085/springapp:${VERSION} .
-                                docker login -u admin -p $docker_password 18.116.29.222:8085 
-                                docker push  18.116.29.222:8085/springapp:${VERSION}
-                                docker rmi 18.116.29.222:8085/springapp:${VERSION}
-                            '''
-                    }
-                }
-            }
-        }
         
-        stage('Indentifying Misconfigs Using Datree In Helm Charts'){
-            steps{
-                script{
-                    sh 'cd kubernetes/'
-                    sh 'helm datree test myapp/'
-                }
-            }
-        }
         
        
    }
