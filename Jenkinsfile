@@ -39,7 +39,17 @@ pipeline{
             }
         }
         
-        
-       
+        stage('Indentifying Misconfigs Using Datree In Helm Charts'){
+            steps{
+                script{
+                    dir('kubernetes/') {
+                          withEnv(['DATREE_TOKEN=625f617a-965b-4c77-a1d3-6eca30898eae'])  {
+                                sh 'helm datree test myapp/'
+                          }
+                    }
+                }
+            }
+        }
+         
    }
 }
